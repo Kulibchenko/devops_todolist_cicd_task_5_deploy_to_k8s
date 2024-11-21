@@ -122,7 +122,7 @@ jobs:
   deploy-helm:
     needs: [helm-ci, docker-ci]
     runs-on: ubuntu-latest
-    name: Deploying to Deploy Helm
+    name: Deploy Helm
     environment: development
 
     steps:
@@ -155,11 +155,11 @@ jobs:
       run: |
         helm upgrade --install --atomic --wait --timeout 3600s --debug todoapp ./todoapp-*.tgz \
           -f ./todoapp/values.yaml \
-          --set mysql.secrets.MYSQL_ROOT_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}"" \
-          --set mysql.secrets.MYSQL_USER="${{ secrets.MYSQL_ROOT_PASSWORD }}"" \
-          --set mysql.secrets.MYSQL_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}"" \
-          --set todoapp.secrets.DB_NAME="${{ secrets.DB_NAME }}"" \
-          --set todoapp.secrets.DB_USER="${{ secrets.DB_USER }}"" \
-          --set todoapp.secrets.DB_PASSWORD="${{ secrets.DB_PASSWORD }}"" \
-          --set todoapp.secrets.DB_HOST="${{ secrets.DB_HOST }}"" \
-          --set todoapp.image.version=${{ github.sha }}
+          --set mysql.secrets.MYSQL_ROOT_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}" \
+          --set mysql.secrets.MYSQL_USER="${{ secrets.MYSQL_ROOT_PASSWORD }}" \
+          --set mysql.secrets.MYSQL_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}" \
+          --set todoapp.secrets.DB_NAME="${{ secrets.DB_NAME }}" \
+          --set todoapp.secrets.DB_USER="${{ secrets.DB_USER }}" \
+          --set todoapp.secrets.DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+          --set todoapp.secrets.DB_HOST="${{ secrets.DB_HOST }}" \
+          --set todoapp.image.version="${{ github.sha }}"
