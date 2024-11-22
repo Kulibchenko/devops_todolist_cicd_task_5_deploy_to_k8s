@@ -1,7 +1,3 @@
-common:
-  environment: "Staging"
-  namespace: todoapp-staging
-
 todoapp:
   namespace: todoapp-staging
   image:
