@@ -1,5 +1,5 @@
 todoapp:
-  namespace: todoapp-staging
+  namespace: todoapp
   image:
     repository: valerakb/todoapp
 
@@ -24,6 +24,3 @@ todoapp:
       capacity: "1Gi"
     persistentVolumeClaim:
       requestStorage: "1Gi"
-
-mysql:
-  namespace: mysql-staging
