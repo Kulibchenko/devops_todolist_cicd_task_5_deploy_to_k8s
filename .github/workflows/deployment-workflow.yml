@@ -51,6 +51,20 @@ jobs:
           resource-group: ${{ vars.AZURE_RESOURCE_GROUP }}
           cluster-name: ${{ vars.AZURE_CLUSTER_NAME }}
 
+      - name: Helm Install Dry Run
+        run: |
+            helm install --dry-run --debug ${{ inputs.helm-release-name }} ./todoapp-*.tgz \
+            -f ${{ inputs.helm-values-path }} \
+            --set mysql.secrets.MYSQL_ROOT_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}" \
+            --set mysql.secrets.MYSQL_USER="${{ secrets.MYSQL_ROOT_PASSWORD }}" \
+            --set mysql.secrets.MYSQL_PASSWORD="${{ secrets.MYSQL_ROOT_PASSWORD }}" \
+            --set todoapp.secrets.DB_NAME="${{ secrets.DB_NAME }}" \
+            --set todoapp.secrets.DB_USER="${{ secrets.DB_USER }}" \
+            --set todoapp.secrets.DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+            --set todoapp.secrets.DB_HOST="${{ secrets.DB_HOST }}" \
+            --set todoapp.image.tag="${{ github.sha }}"
+
+
       - name: Deploy Helm to Development
         run: |
             helm upgrade --install --atomic --wait --timeout 3600s --debug ${{ inputs.helm-release-name }} ./todoapp-*.tgz \
